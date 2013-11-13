@@ -1,5 +1,72 @@
 [
     {
+        "name": "Sociable",
+        "id": "eu.singularlogic.pixelsense.sociable",
+        "contexts": {
+            "OS": [
+                {
+                    "id": "win32",
+                    "version": ">=5.0"
+                }
+            ]
+        },
+        "settingsHandlers": [
+            {
+                "type": "gpii.settingsHandlers.XMLHandler.set",
+                "options": {
+                    "filename": "C:\\Sociable\\Configurations.xml",
+                    "encoding": "utf-8",
+                    "xml-tag": "<?xml version=\"1.0\"?>"
+
+                },
+
+                "capabilities": [
+                    "applications.eu\\.singularlogic\\.pixelsense\\.sociable.id"
+                ],
+                "capabilitiesTransformations": {
+                    "auditoryOutLanguage": {
+                        "value": "display.screenReader.-provisional-auditoryOutLanguage"
+                    },
+                    "screenReaderTTSEnabled": {
+                        "value": "display.screenReader.-provisional-screenReaderTTSEnabled"
+                    },
+                    "highContrastEnabled": {
+                        "value": "display.screenEnhancement.-provisional-highContrastEnabled"
+                    },
+                    "fontSize": {
+                        "value": {
+                            "transform": {
+                                "type": "gpii.transformer.quantize",
+                                "inputPath": "display.screenEnhancement.fontSize",
+                                "ranges": [{
+                                    "upperBound": 14,
+                                    "output": "normal"
+                                },{
+                                    "output": "large"
+                                }]
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "lifecycleManager": {
+            "start": [
+                "setSettings",
+                {
+                    "type": "gpii.launch.exec",
+                    "command": "C:\\Sociable\\Cloud4All.exe"
+                }
+            ],
+            "stop": [ {
+                    "type": "gpii.launch.exec",
+                    "command": "C:\\Sociable\\Cloud4All.exe -stop"
+                },
+                "restoreSettings"
+            ]
+        }
+    },
+    {
         "name": "Windows Built-in Screen Magnifier",
         "id": "com.microsoft.windows.magnifier",
         "contexts": {

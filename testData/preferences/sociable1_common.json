@@ -1,0 +1,6 @@
+{
+ "http://registry.gpii.org/common/fontSize": [{ "value": 24 }],
+ "http://registry.gpii.org/common/highContrastEnabled":[{ "value": true }],
+ "http://registry.gpii.org/common/auditoryOutLanguage": [{ "value": "en" }],
+ "http://registry.gpii.org/common/screenReaderTTSEnabled":[{ "value": true }]
+}
