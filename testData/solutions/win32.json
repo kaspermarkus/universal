@@ -24,26 +24,28 @@
                     "applications.eu\\.singularlogic\\.pixelsense\\.sociable.id"
                 ],
                 "capabilitiesTransformations": {
-                    "auditoryOutLanguage": {
-                        "value": "display.screenReader.-provisional-auditoryOutLanguage"
-                    },
-                    "screenReaderTTSEnabled": {
-                        "value": "display.screenReader.-provisional-screenReaderTTSEnabled"
-                    },
-                    "highContrastEnabled": {
-                        "value": "display.screenEnhancement.-provisional-highContrastEnabled"
-                    },
-                    "fontSize": {
-                        "value": {
-                            "transform": {
-                                "type": "gpii.transformer.quantize",
-                                "inputPath": "display.screenEnhancement.fontSize",
-                                "ranges": [{
-                                    "upperBound": 14,
-                                    "output": "normal"
-                                },{
-                                    "output": "large"
-                                }]
+                    "sociableSettings": {
+                        "auditoryOutLanguage": {
+                            "value": "display.screenReader.-provisional-auditoryOutLanguage"
+                        },
+                        "screenReaderTTSEnabled": {
+                            "value": "display.screenReader.-provisional-screenReaderTTSEnabled"
+                        },
+                        "highContrastEnabled": {
+                            "value": "display.screenEnhancement.-provisional-highContrastEnabled"
+                        },
+                        "fontSize": {
+                            "value": {
+                                "transform": {
+                                    "type": "gpii.transformer.quantize",
+                                    "inputPath": "display.screenEnhancement.fontSize",
+                                    "ranges": [{
+                                        "upperBound": 14,
+                                        "output": "normal"
+                                    },{
+                                        "output": "large"
+                                    }]
+                                }
                             }
                         }
                     }
