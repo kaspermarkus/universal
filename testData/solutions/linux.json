@@ -1268,7 +1268,7 @@
         }
     },
 
-    "webinsight.webAnywhere.linux": {
+    "webinsight.webAnywhere": {
         "name": "Web Anywhere",
         "contexts": {
             "OS": [
@@ -1283,26 +1283,34 @@
                 "type": "gpii.settingsHandlers.noSettings",
                 "capabilities": [
                     "display.screenReader",
-                    "applications.webinsight\\.webAnywhere\\.linux.id",
-                    "display.screenReader.applications.webinsight\\.webAnywhere\\.linux.name"
-                ]
+                    "applications.webinsight\\.webAnywhere.id"
+                ],
+                "capabilitiesTransformations": {
+                    "locale": "http://registry\\.gpii\\.net/common/language",
+                    "voicepitch": "http://registry\\.gpii\\.net/common/pitch",
+                    "voicespeed": "http://registry\\.gpii\\.net/common/speechRate"
+                }
             }
         ],
         "lifecycleManager" : {
-            "start": [
+             "start": [
                 {
-                    "type": "gpii.launch.exec",
-                    "command": "google-chrome http://webanywhere.cs.washington.edu/beta/?starting_url=http%3A%2F%2Fcloud4all.info"
+                    "type": "gpii.launch.browser",
+                    "URL": "http://webanywhere.cs.washington.edu/beta/",
+                    "parameters": {
+                        "locale": "${{settings.webinsight.webAnywhere.locale}}",
+                        "voicepitch": "${{settings.webinsight.webAnywhere.voicepitch}}",
+                        "voicespeed": "${{settings.webinsight.webAnywhere.voicespeed}}"
+
+
+                    }
                 }
             ],
             "stop": [
-                {
-                    "type": "gpii.launch.exec",
-                    "command": "pkill -2 chrome"
-                }
             ]
         }
     },
+
     "org.freedesktop.xrandr": {
         "name": "Xrandr",
         "contexts": {
@@ -1318,6 +1326,79 @@
                     "display.screenEnhacements",
                     "applications.org\\.freedesktop\\.xrandr.id"
                 ]
+           }
+        ],
+        "lifecycleManager": {
+            "start": [
+                "setSettings"
+            ],
+            "stop": [
+                "restoreSettings"
+            ]
+        }
+    },
+    "org.chrome.cloud4chrome": {
+        "name": "Cloud4all Chrome extension",
+        "contexts": {
+            "OS": [{
+                "id": "linux",
+                "version": ">=2.6.26"
+            }]
+        },
+        "settingsHandlers": [
+           {
+                "type": "gpii.settingsHandlers.WebSocketsSettingsHandler",
+                "capabilities": [
+                    "applications.org\\.chrome\\.cloud4chrome.id",
+                    "contrastTheme",
+                    "fontSize"
+                ],
+                "capabilitiesTransformations": {
+                    "fontSize": {
+                        "transform":{
+                            "type": "gpii.transformer.quantize",
+                            "inputPath": "http://registry\\.gpii\\.net/common/fontSize",
+                            "input": 9,
+                            "ranges": [
+                                {
+                                    "upperBound": 12,
+                                    "output": "medium"
+                                },
+                                {
+                                    "upperBound": 18,
+                                    "output": "large"
+                                },
+                                {
+                                    "output": "x-large"
+                                }
+                            ]
+                        }
+                    },
+                    "magnifierEnabled": "http://registry\\.gpii\\.net/common/magnifierEnabled",
+                    "magnification": {
+                        "transform": {
+                            "type": "gpii.transformer.quantize",
+                            "inputPath": "http://registry\\.gpii\\.net/common/magnification",
+                            "input": 1,
+                            "ranges": [
+                                {
+                                    "upperBound": 1.2,
+                                    "output": 1
+                                },
+                                {
+                                    "upperBound": 2.5,
+                                    "output": 2
+                                },
+                                {
+                                    "output": 3
+                                }
+                            ]
+                        }
+                    },
+                    "highContrastEnabled": "http://registry\\.gpii\\.net/common/highContrastEnabled",
+                    "highContrastTheme": "http://registry\\.gpii\\.net/common/highContrastTheme",
+                    "invertColours": "http://registry\\.gpii\\.net/common/invertColours"
+                }
            }
         ],
         "lifecycleManager": {
