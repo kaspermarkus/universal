@@ -12,7 +12,7 @@
         "semver": "~1.1.4",
         "xml-mapping": "~1.2.0",
         "kettle": "git://github.com/fluid-project/kettle.git#e79bb81196df68c97eaa9f96c485a4321b69af75",
-        
+        "ps-node": "~0.0.4",
         "express": "~3.4.3",
         "body-parser": "^1.9.2",
         "connect-ensure-login": "^0.1.1",
