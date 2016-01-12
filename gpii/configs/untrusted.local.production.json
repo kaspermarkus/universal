@@ -1,0 +1,22 @@
+{
+    "typeName": "untrusted.production",
+    "options": {
+        "gradeNames": ["autoInit", "fluid.littleComponent"],
+        "components": {
+            "server": {
+                "type": "kettle.server",
+                "options": {
+                    "logging": true,
+                    "port": 8081
+                }
+            }
+        },
+        "untrustedFlowManagerUrls": {
+            "settings": "http://staging-review4-fm.inclusivedesign.ca/%userToken/untrusted-settings/%device"
+        }
+    },
+    "includes": [
+        "../node_modules/deviceReporter/configs/production.json",
+        "../node_modules/flowManager/configs/untrusted.development.json"
+    ]
+}
