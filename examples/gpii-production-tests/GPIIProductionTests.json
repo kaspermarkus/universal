@@ -1,6 +1,15 @@
 {
     "typeName": "production.with.logging.linux",
     "options": {
+        "components": {
+            "server": {
+                "type": "kettle.server",
+                "options": {
+                    "logging": true,
+                    "port": 8082
+                }
+            }
+        },
         "gradeNames": ["fluid.littleComponent", "autoInit"],
         "devUrls": {
             "preferences": "http://server:8081/preferences/%userToken"
@@ -8,5 +17,5 @@
     },
     "includes": [
         "../../gpii/configs/production.with.logging.json"
-     ]
+    ]
 }
