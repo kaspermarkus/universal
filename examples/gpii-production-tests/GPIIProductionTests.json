@@ -1,0 +1,12 @@
+{
+    "typeName": "production.with.logging.linux",
+    "options": {
+        "gradeNames": ["fluid.littleComponent", "autoInit"],
+        "devUrls": {
+            "preferences": "http://server:8081/preferences/%userToken"
+        }
+    },
+    "includes": [
+        "../../gpii/configs/production.with.logging.json"
+     ]
+}
