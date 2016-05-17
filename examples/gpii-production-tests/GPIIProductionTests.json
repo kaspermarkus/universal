@@ -1,5 +1,5 @@
 {
-    "typeName": "production.with.logging.linux",
+    "typeName": "cloudBased.flowManager.production.linux",
     "options": {
         "components": {
             "server": {
@@ -10,12 +10,14 @@
                 }
             }
         },
-        "gradeNames": ["fluid.littleComponent", "autoInit"],
-        "devUrls": {
-            "preferences": "http://server:8081/preferences/%userToken"
-        }
+        "cloudBasedUrls": {
+            "preferences": "http://server:8082/preferences/%userToken",
+            "deviceReporter": "",
+            "solutionsRegistry": "file://%root/../../../testData/solutions/%os.json"
+        },
+        "gradeNames": ["fluid.littleComponent", "autoInit"]
     },
     "includes": [
-        "../../gpii/configs/production.with.logging.json"
+        "../../gpii/configs/cloudBased.production.json"
     ]
 }
