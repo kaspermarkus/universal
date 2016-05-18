@@ -1,0 +1,14 @@
+{
+    "typeName": "cloudBased.flowManager.production.CI",
+    "options": {
+        "distributeOptions": [
+            {
+                "record": "http://localhost:8082/preferences/%userToken",
+                "target": "{that flowManager}.options.urls.preferences"
+            }
+        ]
+    },
+    "includes": [
+        "../../gpii/configs/cloudBased.production.json"
+    ]
+}

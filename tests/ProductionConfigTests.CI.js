@@ -1,13 +1,6 @@
 /**
 GPII Production Config tests
 
-Requirements:
-* an internet connection
-* a preferences server running at `http://preferences.gpii.net` containing at least the MikelVargas
-NP set
-
----
-
 Copyright 2015 Raising the Floor - International
 
 Licensed under the New BSD license. You may not use this file except in
@@ -28,7 +21,6 @@ var fluid = require("universal"),
     gpii = fluid.registerNamespace("gpii");
 
 require("./ProductionTestDefs");
-
 gpii.loadTestingSupport();
 
 fluid.registerNamespace("gpii.tests.productionConfigTesting");
@@ -40,8 +32,8 @@ fluid.registerNamespace("gpii.tests.productionConfigTesting");
  */
 module.exports = gpii.test.bootstrap({
     testDefs:  "gpii.tests.productionTestDefs.standard",
-    configName: "production.with.logging",
-    configPath: path.resolve(__dirname, "../gpii/configs")
+    configName: "productionTestsCI",
+    configPath: path.resolve(__dirname, "./configs")
 }, ["gpii.test.integration.deviceReporterAware.linux", "gpii.test.integration.testCaseHolder.linux"],
     module, require, __dirname);
 
@@ -51,4 +43,12 @@ module.exports = gpii.test.bootstrap({
  * ================================
  */
 
-module.exports = gpii.test.cloudBased.bootstrap(gpii.tests.productionTestDefs.cloudBased, __dirname);
+// point all tests to specific testing configs (which will overwrite preferences server directive)
+var testDefCopy = fluid.copy(gpii.tests.productionTestDefs.cloudBased);
+fluid.each(testDefCopy, function (val) {
+    if (val.config.configPath) {
+        val.config.configPath = path.resolve(__dirname, "./configs");
+    }
+});
+
+module.exports = gpii.test.cloudBased.bootstrap(testDefCopy, __dirname);
