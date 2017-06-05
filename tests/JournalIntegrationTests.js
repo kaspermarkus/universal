@@ -36,7 +36,7 @@ gpii.tests.journal.testDef = gpii.tests.windows.builtIn[0];
 
 gpii.tests.journal.initialSettings = {
     "gpii.windows.spiSettingsHandler": {
-        "some.app.id": [{
+        "com.microsoft.windows.mouseTrailing": [{
             "settings": {
                 "MouseTrails": {
                     "value": 20
@@ -50,7 +50,7 @@ gpii.tests.journal.initialSettings = {
         }]
     },
     "gpii.windows.registrySettingsHandler": {
-        "some.app.id": [{ // magnifier stuff
+        "com.microsoft.windows.magnifier": [{ // magnifier stuff
             "settings": {
                 "Invert": 1,
                 "Magnification": 200,
@@ -76,12 +76,37 @@ gpii.tests.journal.initialSettings = {
     ]
     },
     "gpii.windows.displaySettingsHandler": {
-        "some.app.id": [{
+        "com.microsoft.windows.screenResolution": [{
             "settings": {
                 "screen-resolution": {
                     "width": 800,
                     "height": 600
                 }
+            }
+        }]
+    },
+    "gpii.windows.enableRegisteredAT": {
+        "com.microsoft.windows.magnifier": [{
+            "settings": {
+                "running": false
+            },
+            "options": {
+                "registryName": "magnifierpane",
+                "queryProcess": "Magnify"
+            }
+        }]
+    }
+};
+
+gpii.tests.journal.settingsAfterCrash = {
+    "gpii.windows.enableRegisteredAT": {
+        "com.microsoft.windows.magnifier": [{
+            "settings": {
+                "running": false
+            },
+            "options": {
+                "registryName": "magnifierpane",
+                "queryProcess": "Magnify"
             }
         }]
     }
@@ -319,8 +344,8 @@ gpii.tests.journal.stashInitial = function (settingsHandlersPayload, settingsSto
     var settingsHandlers = fluid.copy(testCaseHolder.options.settingsHandlers);
     // We eliminate the last blocks since our initial settings state does not include them, and the blocks
     // with values all `undefined` will confuse jqUnit.assertDeepEq in gpii.test.checkConfiguration
-    settingsHandlers["gpii.windows.spiSettingsHandler"]["some.app.id"].length = 1;
-    settingsHandlers["gpii.windows.registrySettingsHandler"]["some.app.id"].length = 1;
+    settingsHandlers["gpii.windows.spiSettingsHandler"] = fluid.filterKeys(settingsHandlers["gpii.windows.spiSettingsHandler"], "com.microsoft.windows.mouseTrailing");
+    settingsHandlers["gpii.windows.registrySettingsHandler"] = fluid.filterKeys(settingsHandlers["gpii.windows.registrySettingsHandler"], "com.microsoft.windows.magnifier");
     testCaseHolder.settingsHandlers = settingsHandlers;
 };
 
@@ -349,7 +374,7 @@ gpii.tests.journal.normalLoginFixtures = [
 gpii.tests.journal.fixtures = [
     {
         name: "Journal state and restoration",
-        expect: 10,
+        expect: 11,
         sequenceSegments: [
             {   func: "gpii.tests.journal.stashJournalId",
                 args: "{testCaseHolder}"
@@ -386,6 +411,12 @@ gpii.tests.journal.fixtures = [
             },
             kettle.test.startServerSequence,
             {
+                func: "gpii.test.setSettings",
+                args: [gpii.tests.journal.settingsAfterCrash, "{nameResolver}", "{testCaseHolder}.events.onInitialSettingsComplete.fire"]
+            }, {
+                event: "{tests}.events.onInitialSettingsComplete",
+                listener: "fluid.identity"
+            }, {
                 func: "{listJournalsRequest}.send"
             }, {
                 event: "{listJournalsRequest}.events.onComplete",
