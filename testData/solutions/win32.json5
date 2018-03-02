@@ -970,7 +970,12 @@
                         "retryInterval": 1000
                     },
                     "registryName": "magnifierpane",
-                    "queryProcess": "Magnify.exe"
+                    "isRunning": [
+                        {
+                            "type": "gpii.processReporter.find",
+                            "command": "Magnify.exe"
+                        }
+                    ]
                 }
             }
         },
@@ -1044,7 +1049,12 @@
                 "type": "gpii.windows.enableRegisteredAT",
                 "options": {
                     "registryName": "osk",
-                    "queryProcess": "osk.exe"
+                    "isRunning": [
+                        {
+                            "type": "gpii.processReporter.find",
+                            "command": "osk.exe"
+                        }
+                    ]
                 }
             }
         },
